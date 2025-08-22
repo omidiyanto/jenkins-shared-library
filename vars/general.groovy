@@ -8,11 +8,8 @@ def loadEnvVars() {
     env.bccEmail1= 'omidiyanto7@gmail.com'
     env.bccEmail2= 'omidiyanto7@gmail.com'   
     env.registryUsername = 'developer'
-    env.registryPassword = credentials('registry.satnusa.com-password') //buat di credentials Jenkins
     env.argocdServer = '192.168.88.20:30275' // URL ArgoCD server
-    env.argocdPassword = credentials('argocd-password') //buat di credentials Jenkins
     env.gitCredentials = 'bitbucket-satnusa-account' //buat di credentials Jenkins
-    env.SONAR_SCANNER = tool 'sonarqube'  //konfigurasi di tools config jenkins    
     env.SONAR_TOKEN_NAME = "sonarqube-token"
     env.SONAR_HOST_URL = 'http://192.168.88.20:9000'
     env.DD_API_KEY_NAME = 'dd-api-key-live'
