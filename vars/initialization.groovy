@@ -33,12 +33,13 @@ def checkoutAndPreparation() {
     echo "Blue Ocean URL yang disiapkan:"
     echo "${env.JENKINS_URL}blue/organizations/jenkins/${env.encodedJob}/detail/${env.jobDisplay}/${env.BUILD_NUMBER}/pipeline"
     // Notify Build Has Started via Email 
-    sendEmailTemplate.default(
+    sendEmailTemplate.mail(
         MAILMODE: MAILMODE,
         RECIPIENT: env.authorName,
         RECIPIENTEMAIL: env.authorEmail,
         MAILMESSAGE: MAILMESSAGE
     )
+    
     if (env.branch_name == "master" || env.branch_name == "main" || env.branch_name == "develop") {
         env.sonarProjectKey = "${env.appName}-${env.branch_name.toLowerCase()}"
     } else if (env.branch_name.startsWith("release/") || env.branch_name.startsWith("hotfix/")) {

@@ -1,4 +1,4 @@
-def default(Map config = [:]) {
+def mail(Map config = [:]) {
     if (config.MAILMODE="START-AUTOMATED") {
         SUBJECT= "[START] Jenkins Pipeline - ${env.JOB_NAME}#${env.BUILD_NUMBER}"
         MAILMESSAGE = """
