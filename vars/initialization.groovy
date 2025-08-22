@@ -36,10 +36,9 @@ def checkoutAndPreparation() {
     sendEmailTemplate.mail(
         MAILMODE: MAILMODE,
         RECIPIENT: env.authorName,
-        RECIPIENTEMAIL: env.authorEmail,
-        MAILMESSAGE: MAILMESSAGE
+        RECIPIENTEMAIL: env.authorEmail
     )
-    
+
     if (env.branch_name == "master" || env.branch_name == "main" || env.branch_name == "develop") {
         env.sonarProjectKey = "${env.appName}-${env.branch_name.toLowerCase()}"
     } else if (env.branch_name.startsWith("release/") || env.branch_name.startsWith("hotfix/")) {
