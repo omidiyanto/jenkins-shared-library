@@ -95,7 +95,7 @@ def postAction(Map config = [:]) {
     securityTest.generateReportAndPublishToDD(verifiedPolicy: ddCustomPolicy)
     // Notify Build Has Finished via Email
     def buildResult = currentBuild.result
-    sendEmailTemplate(MAILMODE: 'POST_BUILD_REPORT',RECIPIENT_NAME: env.authorName,EXTRA_DATA: [buildResult: buildResult])
+    sendEmailTemplate(MAILMODE: 'POST_BUILD_REPORT',RECIPIENT_NAME: env.authorName,EXTRA_DATA: [buildResult: buildResult],ATTACHMENT_PATTERN: 'report.html')
     cleanWs()
 }
 
