@@ -47,6 +47,9 @@ def printEnvVars(Map config = [:]) {
     echo "bccEmail2: ${env.bccEmail2}"
 }   
 
+def printHelloWorld() {
+    echo "Hello World from envVars Shared Library!"
+}
 // Load env variables and enable it for shared library
                     // envVars.environmentVariablesSetup(
                     //     BUILD_USER_ID: env.BUILD_USER_ID,

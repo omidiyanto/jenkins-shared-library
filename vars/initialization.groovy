@@ -1,6 +1,8 @@
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
     env.who = config.who
+    // call from another function from another file
+    envVars.printHelloWorld()
 }
 
 def checkoutAndPreparation() {
