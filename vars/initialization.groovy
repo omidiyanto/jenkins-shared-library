@@ -1,16 +1,16 @@
 def environmentVariablesSetup(Map config = [:]) {
-    env.gitUrl: config.gitUrl,
-    env.gitOpsRepo: config.gitOpsRepo,
-    env.imageNameBase: config.imageNameBase,
-    env.registryName: config.registryName,
-    env.djangoSecretKey: config.djangoSecretKey,
-    env.appName: config.appName,
-    env.firstApproverID: config.firstApproverID,
-    env.firstApproverEmail: config.firstApproverEmail,
-    env.secondApproverID: config.secondApproverID,
-    env.secondApproverEmail: config.secondApproverEmail,
-    env.developersEmail: config.developersEmail,
-    env.bccEmail1: config.bccEmail1,
+    env.gitUrl: config.gitUrl
+    env.gitOpsRepo: config.gitOpsRepo
+    env.imageNameBase: config.imageNameBase
+    env.registryName: config.registryName
+    env.djangoSecretKey: config.djangoSecretKey
+    env.appName: config.appName
+    env.firstApproverID: config.firstApproverID
+    env.firstApproverEmail: config.firstApproverEmail
+    env.secondApproverID: config.secondApproverID
+    env.secondApproverEmail: config.secondApproverEmail
+    env.developersEmail: config.developersEmail
+    env.bccEmail1: config.bccEmail1
     env.bccEmail2: config.bccEmail2
 }
 
