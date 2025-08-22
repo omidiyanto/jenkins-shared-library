@@ -17,9 +17,10 @@ def environmentVariablesSetup(Map config = [:]) {
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
     env.who = config.who
+    echo "${env.BUILD_USER_ID} - ${env.BUILD_USER} - ${env.BUILD_USER_EMAIL} - ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
 }
 
-def preparation(Map config = [:]) {
+def checkoutAndPreparation(Map config = [:]) {
     def isManual = config.BRANCHNAME_PARAM?.trim()
     if (isManual) {
         if (!config.BRANCHNAME_PARAM?.trim()) {
