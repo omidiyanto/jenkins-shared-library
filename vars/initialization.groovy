@@ -20,15 +20,10 @@ def checkoutAndPreparation() {
         env.branch_name = params.BRANCHNAME_PARAM
         echo "Manual build detected. Using branch_name from parameter: ${env.branch_name}"
         echo "Manual build by: ${env.authorName} <${env.authorEmail}>"
-        MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
+        MAILMODE="START-MANUAL"
     } else {
         echo "Automated build from webhook detected. Using branch_name: ${env.branch_name}"
-        MAILMESSAGE = """ 
-Your recent commit (${env.commit_sha}) has triggered a new build of ${env.JOB_NAME} #${env.BUILD_NUMBER}.
-
-Commit Message: 
-${env.commitMessage}
-"""
+        MAILMODE="START-MANUAL"
     }
     cleanWs()
     env.encodedJob = env.JOB_NAME.replace('/', '%2F')
@@ -38,8 +33,8 @@ ${env.commitMessage}
     echo "Blue Ocean URL yang disiapkan:"
     echo "${env.JENKINS_URL}blue/organizations/jenkins/${env.encodedJob}/detail/${env.jobDisplay}/${env.BUILD_NUMBER}/pipeline"
     // Notify Build Has Started via Email 
-    sendEmailTemplate(
-        JENKINS_PIPELINE_STATUS: '[START]',
+    sendEmailTemplate.default(
+        MAILMODE: MAILMODE,
         RECIPIENT: env.authorName,
         RECIPIENTEMAIL: env.authorEmail,
         MAILMESSAGE: MAILMESSAGE
