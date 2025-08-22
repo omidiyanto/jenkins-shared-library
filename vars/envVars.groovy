@@ -46,3 +46,29 @@ def printEnvVars(Map config = [:]) {
     echo "bccEmail1: ${env.bccEmail1}"
     echo "bccEmail2: ${env.bccEmail2}"
 }   
+
+// Load env variables and enable it for shared library
+                    // envVars.environmentVariablesSetup(
+                    //     BUILD_USER_ID: env.BUILD_USER_ID,
+                    //     BUILD_USER: env.BUILD_USER,
+                    //     BUILD_USER_EMAIL: env.BUILD_USER_EMAIL,
+                    //     JOB_NAME: env.JOB_NAME,
+                    //     BUILD_NUMBER: env.BUILD_NUMBER,
+                    //     branch_name: env.branch_name,
+                    //     commit_sha: env.commit_sha,
+                    //     commitMessage: env.commitMessage,
+                    //     gitUrl: env.gitUrl,
+                    //     gitOpsRepo: env.gitOpsRepo,
+                    //     imageNameBase: env.imageNameBase,
+                    //     registryName: env.registryName,
+                    //     djangoSecretKey: env.djangoSecretKey,
+                    //     appName: env.appName,
+                    //     firstApproverID: env.firstApproverID,
+                    //     firstApproverEmail: env.firstApproverEmail,
+                    //     secondApproverID: env.secondApproverID,
+                    //     secondApproverEmail: env.secondApproverEmail,
+                    //     developersEmail: env.developersEmail,
+                    //     bccEmail1: env.bccEmail1,
+                    //     bccEmail2: env.bccEmail2
+                    // )
+                    // envVars.printEnvVars()

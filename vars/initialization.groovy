@@ -3,10 +3,10 @@ def hello(Map config = [:]) {
     env.who = config.who
 }
 
-def checkoutAndPreparation(Map config = [:]) {
-    def isManual = config.BRANCHNAME_PARAM?.trim()
+def checkoutAndPreparation() {
+    def isManual = params.BRANCHNAME_PARAM?.trim()
     if (isManual) {
-        if (!config.BRANCHNAME_PARAM?.trim()) {
+        if (!params.BRANCHNAME_PARAM?.trim()) {
             error "Parameter BRANCHNAME_PARAM wajib diisi untuk manual build!"
         }
         wrap([$class: 'BuildUser']) {
@@ -14,7 +14,7 @@ def checkoutAndPreparation(Map config = [:]) {
             env.authorName = env.BUILD_USER ?: 'Unknown'
             env.authorEmail = env.BUILD_USER_EMAIL ?: 'no-reply@example.com'
         }
-        env.branch_name = config.BRANCHNAME_PARAM
+        env.branch_name = params.BRANCHNAME_PARAM
         echo "Manual build detected. Using branch_name from parameter: ${env.branch_name}"
         echo "Manual build by: ${env.authorName} <${env.authorEmail}>"
         MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
