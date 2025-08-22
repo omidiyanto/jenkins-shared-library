@@ -23,7 +23,7 @@ def checkoutAndPreparation() {
         MAILMODE="START-MANUAL"
     } else {
         echo "Automated build from webhook detected. Using branch_name: ${env.branch_name}"
-        MAILMODE="START-MANUAL"
+        MAILMODE="START-AUTOMATED"
     }
     cleanWs()
     env.encodedJob = env.JOB_NAME.replace('/', '%2F')
