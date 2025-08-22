@@ -1,4 +1,5 @@
 def environmentVariablesSetup(Map config = [:]) {
+    echo "Setting up environment variables for shared library usage..."
     env.BUILD_USER_ID = config.BUILD_USER_ID
     env.BUILD_USER = config.BUILD_USER
     env.BUILD_USER_EMAIL = config.BUILD_USER_EMAIL
