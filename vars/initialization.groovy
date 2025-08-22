@@ -1,6 +1,6 @@
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
-    env.who = ${config.who}
+    env.who = config.who
 }
 
 def preparation(Map config = [:]) {
