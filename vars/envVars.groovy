@@ -4,9 +4,9 @@ def environmentVariablesSetup(Map config = [:]) {
     env.BUILD_USER_EMAIL = config.BUILD_USER_EMAIL
     env.JOB_NAME = config.JOB_NAME
     env.BUILD_NUMBER = config.BUILD_NUMBER
-    env.branch_name = config.branch_name,
-    env.commit_sha = config.commit_sha,
-    env.commitMessage = config.commitMessage,
+    env.branch_name = config.branch_name
+    env.commit_sha = config.commit_sha
+    env.commitMessage = config.commitMessage
     env.gitUrl = config.gitUrl
     env.gitOpsRepo = config.gitOpsRepo
     env.imageNameBase = config.imageNameBase
@@ -22,7 +22,7 @@ def environmentVariablesSetup(Map config = [:]) {
     env.bccEmail2 = config.bccEmail2
 }
 
-def printEnvVars() {
+def printEnvVars(Map config = [:]) {
     echo "BUILD_USER_ID: ${env.BUILD_USER_ID}"
     echo "BUILD_USER: ${env.BUILD_USER}"
     echo "BUILD_USER_EMAIL: ${env.BUILD_USER_EMAIL}"
