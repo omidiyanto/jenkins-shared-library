@@ -4,6 +4,7 @@ def hello(Map config = [:]) {
 }
 
 def checkoutAndPreparation() {
+    // Validasi trigger: manual (parameter) atau webhook
     def isManual = params.BRANCHNAME_PARAM?.trim()
     if (isManual) {
         if (!params.BRANCHNAME_PARAM?.trim()) {
