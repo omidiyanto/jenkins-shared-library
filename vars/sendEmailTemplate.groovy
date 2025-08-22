@@ -11,9 +11,11 @@ ${env.commitMessage}
         SUBJECT= "[START] Jenkins Pipeline - ${env.JOB_NAME}#${env.BUILD_NUMBER}"
         MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
     }
+
+    
     emailext(
         attachLog: true,
-        subject: ${SUBJECT},
+        subject: SUBJECT,
         body: """ 
 Hello ${config.RECIPIENT}, 
 
