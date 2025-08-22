@@ -1,9 +1,3 @@
-def hello(Map config = [:]) {
-    echo "hello from ${config.who}"
-    env.who = config.who
-    // call from another function from another file
-    envVars.printHelloWorld()
-}
 
 def checkoutAndPreparation() {
     // Validasi trigger: manual (parameter) atau webhook
@@ -61,3 +55,4 @@ def checkoutAndPreparation() {
     echo "Using Image Tag: ${env.imageTag}"
     git branch: env.branch_name, credentialsId: env.gitCredentials, url: env.gitUrl
 }
+
