@@ -1,43 +1,6 @@
-def environmentVariablesSetup(Map config = [:]) {
-    env.BUILD_USER_ID = config.BUILD_USER_ID
-    env.BUILD_USER = config.BUILD_USER
-    env.BUILD_USER_EMAIL = config.BUILD_USER_EMAIL
-    env.JOB_NAME = config.JOB_NAME
-    env.BUILD_NUMBER = config.BUILD_NUMBER
-    env.gitUrl = config.gitUrl
-    env.gitOpsRepo = config.gitOpsRepo
-    env.imageNameBase = config.imageNameBase
-    env.registryName = config.registryName
-    env.djangoSecretKey = config.djangoSecretKey
-    env.appName = config.appName
-    env.firstApproverID = config.firstApproverID
-    env.firstApproverEmail = config.firstApproverEmail
-    env.secondApproverID = config.secondApproverID
-    env.secondApproverEmail = config.secondApproverEmail
-    env.developersEmail = config.developersEmail
-    env.bccEmail1 = config.bccEmail1
-    env.bccEmail2 = config.bccEmail2
-}
-
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
     env.who = config.who
-    echo "${env.BUILD_USER_ID} - ${env.BUILD_USER} - ${env.BUILD_USER_EMAIL} - ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
-    // test prinv var from groovy jenkins shared library
-    echo "${env.who}"
-    echo "gitUrl: ${env.gitUrl}"
-    echo "gitOpsRepo: ${env.gitOpsRepo}"
-    echo "imageNameBase: ${env.imageNameBase}"
-    echo "registryName: ${env.registryName}"
-    echo "djangoSecretKey: ${env.djangoSecretKey}"
-    echo "appName: ${env.appName}"
-    echo "firstApproverID: ${env.firstApproverID}"
-    echo "firstApproverEmail: ${env.firstApproverEmail}"    
-    echo "secondApproverID: ${env.secondApproverID}"
-    echo "secondApproverEmail: ${env.secondApproverEmail}"
-    echo "developersEmail: ${env.developersEmail}"
-    echo "bccEmail1: ${env.bccEmail1}"
-    echo "bccEmail2: ${env.bccEmail2}"
 }
 
 def checkoutAndPreparation(Map config = [:]) {
