@@ -23,6 +23,21 @@ def hello(Map config = [:]) {
     echo "hello from ${config.who}"
     env.who = config.who
     echo "${env.BUILD_USER_ID} - ${env.BUILD_USER} - ${env.BUILD_USER_EMAIL} - ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
+    // test prinv var from groovy jenkins shared library
+    echo "${env.who}"
+    echo "gitUrl: ${env.gitUrl}"
+    echo "gitOpsRepo: ${env.gitOpsRepo}"
+    echo "imageNameBase: ${env.imageNameBase}"
+    echo "registryName: ${env.registryName}"
+    echo "djangoSecretKey: ${env.djangoSecretKey}"
+    echo "appName: ${env.appName}"
+    echo "firstApproverID: ${env.firstApproverID}"
+    echo "firstApproverEmail: ${env.firstApproverEmail}"    
+    echo "secondApproverID: ${env.secondApproverID}"
+    echo "secondApproverEmail: ${env.secondApproverEmail}"
+    echo "developersEmail: ${env.developersEmail}"
+    echo "bccEmail1: ${env.bccEmail1}"
+    echo "bccEmail2: ${env.bccEmail2}"
 }
 
 def checkoutAndPreparation(Map config = [:]) {
