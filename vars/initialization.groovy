@@ -1,3 +1,3 @@
-def hello(){
-    echo "hello from initialization.groovy"
+def hello(Map config = [:]) {
+    echo "hello from ${config.who}"
 }
