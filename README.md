@@ -1,0 +1,1 @@
+This shared library created by O. Midiyanto

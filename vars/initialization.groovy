@@ -1,6 +1,21 @@
+def environmentVariablesSetup(Map config = [:]) {
+    env.gitUrl: config.gitUrl,
+    env.gitOpsRepo: config.gitOpsRepo,
+    env.imageNameBase: config.imageNameBase,
+    env.registryName: config.registryName,
+    env.djangoSecretKey: config.djangoSecretKey,
+    env.appName: config.appName,
+    env.firstApproverID: config.firstApproverID,
+    env.firstApproverEmail: config.firstApproverEmail,
+    env.secondApproverID: config.secondApproverID,
+    env.secondApproverEmail: config.secondApproverEmail,
+    env.developersEmail: config.developersEmail,
+    env.bccEmail1: config.bccEmail1,
+    env.bccEmail2: config.bccEmail2
+}
+
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
-    env.who = config.who
 }
 
 def preparation(Map config = [:]) {
@@ -10,21 +25,21 @@ def preparation(Map config = [:]) {
             error "Parameter BRANCHNAME_PARAM wajib diisi untuk manual build!"
         }
         wrap([$class: 'BuildUser']) {
-            authorID = config.BUILD_USER_ID ?: 'Unknown'
-            authorName = config.BUILD_USER ?: 'Unknown'
-            authorEmail = config.BUILD_USER_EMAIL ?: 'no-reply@example.com'
+            env.authorID = env.BUILD_USER_ID ?: 'Unknown'
+            env.authorName = env.BUILD_USER ?: 'Unknown'
+            env.authorEmail = env.BUILD_USER_EMAIL ?: 'no-reply@example.com'
         }
-        branch_name = config.BRANCHNAME_PARAM
-        echo "Manual build detected. Using branch_name from parameter: ${branch_name}"
-        echo "Manual build by: ${authorName} <${authorEmail}>"
-        MAILMESSAGE = "Your recent manual build of ${config.JOB_NAME} #${config.BUILD_NUMBER} has been started."
+        env.branch_name = config.BRANCHNAME_PARAM
+        echo "Manual build detected. Using branch_name from parameter: ${env.branch_name}"
+        echo "Manual build by: ${env.authorName} <${env.authorEmail}>"
+        MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
     } else {
-        echo "Automated build from webhook detected. Using branch_name: ${config.branch_name}"
+        echo "Automated build from webhook detected. Using branch_name: ${env.branch_name}"
         MAILMESSAGE = """ 
-Your recent commit (${config.commit_sha}) has triggered a new build of ${config.JOB_NAME} #${config.BUILD_NUMBER}.
+Your recent commit (${env.commit_sha}) has triggered a new build of ${env.JOB_NAME} #${env.BUILD_NUMBER}.
 
 Commit Message: 
-${config.commitMessage}
+${env.commitMessage}
 """
     }
     cleanWs()
