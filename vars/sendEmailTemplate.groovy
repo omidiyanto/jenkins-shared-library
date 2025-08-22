@@ -12,14 +12,15 @@ ${env.commitMessage}
         MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
     }
 
-    
+
+
     emailext(
         attachLog: true,
         subject: SUBJECT,
         body: """ 
-Hello ${config.RECIPIENT}, 
+Hello ${env.authorEmail}, 
 
-${config.MAILMESSAGE}
+${MAILMESSAGE}
 
 You can follow the progress here:
 ${env.JENKINS_URL}blue/organizations/jenkins/${env.encodedJob}/detail/${env.jobDisplay}/${env.BUILD_NUMBER}/pipeline
@@ -29,6 +30,7 @@ Thank you.
 Best regards,  
 DevOps Team
 """,
+        attachmentsPattern: ${config.ATTACHMENT},
         to: """\
             ${config.RECIPIENTEMAIL},
             cc:${env.developersEmail},

@@ -36,7 +36,7 @@ def checkoutAndPreparation() {
     sendEmailTemplate.mail(
         MAILMODE: MAILMODE,
         RECIPIENT: env.authorName,
-        RECIPIENTEMAIL: env.authorEmail
+        RECIPIENTEMAIL: env.authorEmail,
     )
 
     if (env.branch_name == "master" || env.branch_name == "main" || env.branch_name == "develop") {
