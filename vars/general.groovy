@@ -56,3 +56,25 @@ def checkoutAndPreparation() {
     git branch: env.branch_name, credentialsId: env.gitCredentials, url: env.gitUrl
 }
 
+def postAction(Map config = [:]) {
+    sh "docker rm -f ${env.appName}-sca-test-${env.BUILD_NUMBER}"
+    sh "docker rmi -f ${env.registryName}/${env.imageName}:${env.imageTag}"
+    sh "docker rmi -f ${env.registryName}/${env.imageName}:${env.commit_sha}"
+    sh "docker rmi -f ${env.appName}-sca-test-${env.BUILD_NUMBER}"
+    sh "docker volume rm ${env.appName}-sca-test-${env.BUILD_NUMBER}-volume"
+    sh "rm -rf ~/${env.BUILD_NUMBER}-${env.appName}-unit-test"
+    sh "docker rmi -f ${env.registryName}/${env.imageName}:${env.imageTag}-unit-test"
+    sh "PGPASSWORD=postgres psql -U postgres -h jenkins-postgres -p 5432 -c 'DROP DATABASE IF EXISTS nusames_analytic_${env.BUILD_NUMBER};'"
+    def ddCustomPolicy = [
+        'Trufflehog Scan': true,
+        'Anchore Grype'  : false,
+        'Trivy Scan'     : false,
+        'SonarQube Scan' : false
+    ]
+    securityTest.generateReportAndPublishToDD(verifiedPolicy: ddCustomPolicy)
+    // Notify Build Has Finished via Email
+    def buildResult = currentBuild.result
+    sendEmailTemplate(MAILMODE: 'POST_BUILD_REPORT',RECIPIENT_NAME: env.authorName,EXTRA_DATA: [buildResult: buildResult])
+    cleanWs()
+}
+

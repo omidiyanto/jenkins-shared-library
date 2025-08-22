@@ -107,7 +107,7 @@ def generateReportAndPublishToDD(Map config = [:]) {
         echo "Defect Dojo Engagement Name=${env.engagement_name}"
         def count = sh(
             script: """
-                    curl -s -G "${env.DD_URL}/api/v2/engagements/" \
+                    curl -sS -f -G "${env.DD_URL}/api/v2/engagements/" \
                         -H "Authorization: Token ${DD_API_KEY}" \
                         --data-urlencode "name=${env.engagement_name}" \
                         --data-urlencode "product__name=${env.appName}" | jq -r '.count'
@@ -132,7 +132,7 @@ def generateReportAndPublishToDD(Map config = [:]) {
             u -> if (fileExists(u.file)) {
                 def verified = (VERIFIED_POLICY.get(u.type, false) ? "true": "false")
                 sh """
-                    curl -sS -X POST "${env.DD_URL}/api/v2/reimport-scan/" \
+                    curl -sS -f -X POST "${env.DD_URL}/api/v2/reimport-scan/" \
                     -H "Authorization: Token ${DD_API_KEY}" \
                     -F "product_name=${env.appName}" \
                     -F "product_type_name=Nusames" \
