@@ -1,4 +1,9 @@
 def environmentVariablesSetup(Map config = [:]) {
+    BUILD_USER_ID = config.BUILD_USER_ID
+    BUILD_USER = config.BUILD_USER
+    BUILD_USER_EMAIL = config.BUILD_USER_EMAIL
+    JOB_NAME = config.JOB_NAME
+    BUILD_NUMBER = config.BUILD_NUMBER
     env.gitUrl = config.gitUrl
     env.gitOpsRepo = config.gitOpsRepo
     env.imageNameBase = config.imageNameBase
