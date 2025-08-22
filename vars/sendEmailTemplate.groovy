@@ -1,5 +1,5 @@
 def mail(Map config = [:]) {
-    if (config.MAILMODE="START-AUTOMATED") {
+    if (config.MAILMODE == "START-AUTOMATED") {
         SUBJECT= "[START] Jenkins Pipeline - ${env.JOB_NAME}#${env.BUILD_NUMBER}"
         MAILMESSAGE = """
 Your recent commit (${env.commit_sha}) has triggered a new build of ${env.JOB_NAME} #${env.BUILD_NUMBER}.
@@ -7,7 +7,7 @@ Your recent commit (${env.commit_sha}) has triggered a new build of ${env.JOB_NA
 Commit Message: 
 ${env.commitMessage}
 """
-    } else if (config.MAILMODE="START-MANUAL") {
+    } else if (config.MAILMODE == "START-MANUAL") {
         SUBJECT= "[START] Jenkins Pipeline - ${env.JOB_NAME}#${env.BUILD_NUMBER}"
         MAILMESSAGE = "Your recent manual build of ${env.JOB_NAME} #${env.BUILD_NUMBER} has been started."
     }
