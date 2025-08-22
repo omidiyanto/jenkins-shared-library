@@ -1,5 +1,4 @@
 def loadEnvVars() {
-    // Jenkins user IDs yang diperbolehkan untuk approve
     env.firstApproverID = 'omidiyantosatnusa'
     env.firstApproverEmail = 'o.midiyanto@satnusa.com'
     env.secondApproverID = 'omidiyanto7'
@@ -74,6 +73,26 @@ def checkoutAndPreparation() {
     git branch: env.branch_name, credentialsId: env.gitCredentials, url: env.gitUrl
 }
 
+def cloneGitOpsRepo() {
+    git branch: 'master', credentialsId: env.gitCredentials, url: env.gitOpsRepo
+    sh "git config user.email 'jenkins@satnusa.com'"
+    sh "git config user.name 'Jenkins CI'"
+    sh "argocd login ${env.argocdServer} --username admin --password ${env.argocdPassword} --insecure"
+}
+
+def pushToRegistry() {
+    sh "echo ${env.registryPassword} | docker login ${env.registryName} -u ${env.registryUsername} --password-stdin"   
+    if ((env.branch_name == "master" || env.branch_name == "main" || env.branch_name.startsWith("release/") || env.branch_name.startsWith("hotfix/") || env.branch_name == "develop")) {            
+        sh "docker push ${env.registryName}/${env.imageName}:${env.imageTag}"
+        if (env.branch_name == "master" || env.branch_name == "main") {
+            sh "docker tag ${env.registryName}/${env.imageName}:${env.imageTag} ${env.registryName}/${env.imageName}-dev:${env.imageTag}"
+            sh "docker push ${env.registryName}/${env.imageName}-dev:${env.imageTag}"
+        }
+    } else {
+        sh "docker push ${env.registryName}/${env.imageName}:${env.commit_sha}"
+    }
+}
+
 def postAction(Map config = [:]) {
     sh "docker rm -f ${env.appName}-sca-test-${env.BUILD_NUMBER}"
     sh "docker rmi -f ${env.registryName}/${env.imageName}:${env.imageTag}"
@@ -82,7 +101,10 @@ def postAction(Map config = [:]) {
     sh "docker volume rm ${env.appName}-sca-test-${env.BUILD_NUMBER}-volume"
     sh "rm -rf ~/${env.BUILD_NUMBER}-${env.appName}-unit-test"
     sh "docker rmi -f ${env.registryName}/${env.imageName}:${env.imageTag}-unit-test"
-    sh "PGPASSWORD=postgres psql -U postgres -h jenkins-postgres -p 5432 -c 'DROP DATABASE IF EXISTS nusames_analytic_${env.BUILD_NUMBER};'"
+    sh """
+    PGPASSWORD=postgres psql -U postgres -h jenkins-postgres -p 5432 -c 'DROP DATABASE IF EXISTS ${env.appName.replace('-', '_')}_${env.BUILD_NUMBER};'
+    PGPASSWORD=postgres psql -U postgres -h jenkins-postgres -p 5432 -c 'DROP DATABASE IF EXISTS ${env.appName.replace('-', '_')};'
+    """
     def ddCustomPolicy = [
         'Trufflehog Scan': true,
         'Anchore Grype'  : false,
