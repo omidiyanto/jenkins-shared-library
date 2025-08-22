@@ -1,5 +1,26 @@
+def loadEnvVars() {
+    // Jenkins user IDs yang diperbolehkan untuk approve
+    firstApproverID = 'omidiyantosatnusa'
+    firstApproverEmail = 'o.midiyanto@satnusa.com'
+    secondApproverID = 'omidiyanto7'
+    secondApproverEmail = 'omidiyanto7@gmail.com'
+    developersEmail = 'o.midiyanto@satnusa.com'
+    bccEmail1= 'omidiyanto7@gmail.com'
+    bccEmail2= 'omidiyanto7@gmail.com'   
+    registryUsername = 'developer'
+    registryPassword = credentials('registry.satnusa.com-password') //buat di credentials Jenkins
+    argocdServer = '192.168.88.20:30275' // URL ArgoCD server
+    argocdPassword = credentials('argocd-password') //buat di credentials Jenkins
+    gitCredentials = 'bitbucket-satnusa-account' //buat di credentials Jenkins
+    SONAR_SCANNER = tool 'sonarqube'  //konfigurasi di tools config jenkins    
+    SONAR_TOKEN_NAME = "sonarqube-token"
+    SONAR_HOST_URL = 'http://192.168.88.20:9000'
+    DD_API_KEY_NAME = 'dd-api-key-live'
+    DD_URL = 'http://192.168.88.20:8380'
+}
 
 def checkoutAndPreparation() {
+    loadEnvVars()
     // Validasi trigger: manual (parameter) atau webhook
     def isManual = params.BRANCHNAME_PARAM?.trim()
     if (isManual) {
