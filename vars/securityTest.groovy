@@ -67,7 +67,7 @@ def sast(Map config = [:]) {
     if (qualityGateResult.status == 'ERROR') {
         echo "SonarQube Quality Gate gagal dengan status: ${qualityGateResult.status}. Pipeline bypassed."
     }
-    withCredentials([string(credentialsId: SONAR_TOKEN_ID, variable: 'SONAR_TOKEN')]) {
+    withCredentials([string(credentialsId: SONAR_TOKEN_NAME, variable: 'SONAR_TOKEN')]) {
           sh """curl -s -u "${SONAR_TOKEN}:" "${env.SONAR_HOST_URL}/api/hotspots/search?project=${env.sonarProjectKey}" -o sonarqube-scan-report.json || true"""
     }
 }
