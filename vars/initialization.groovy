@@ -38,28 +38,11 @@ ${env.commitMessage}
     echo "Blue Ocean URL yang disiapkan:"
     echo "${env.JENKINS_URL}blue/organizations/jenkins/${env.encodedJob}/detail/${env.jobDisplay}/${env.BUILD_NUMBER}/pipeline"
     // Notify Build Has Started via Email 
-    emailext(
-        attachLog: true,
-        subject: "Jenkins Pipeline Started - ${env.JOB_NAME}#${env.BUILD_NUMBER}",
-        body: """ 
-Hello ${env.authorName}, 
-
-${MAILMESSAGE}
-
-You can follow the progress here:
-${env.JENKINS_URL}blue/organizations/jenkins/${env.encodedJob}/detail/${env.jobDisplay}/${env.BUILD_NUMBER}/pipeline
-
-Thank you.
-
-Best regards,  
-DevOps Team
-""",
-        to: """\
-                            ${env.authorEmail},
-                            cc:${env.developersEmail},
-                            bcc:${env.bccEmail1},
-                            bcc:${env.bccEmail2}
-                        """
+    sendEmailTemplate(
+        JENKINS_PIPELINE_STATUS: '[START]',
+        RECIPIENT: env.authorName,
+        RECIPIENTEMAIL: env.authorEmail,
+        MAILMESSAGE: MAILMESSAGE
     )
     if (env.branch_name == "master" || env.branch_name == "main" || env.branch_name == "develop") {
         env.sonarProjectKey = "${env.appName}-${env.branch_name.toLowerCase()}"
