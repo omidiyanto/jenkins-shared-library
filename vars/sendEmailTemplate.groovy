@@ -30,7 +30,7 @@ Thank you.
 Best regards,  
 DevOps Team
 """,
-        attachmentsPattern: ${config.ATTACHMENT},
+        attachmentsPattern: config.ATTACHMENT,
         to: """\
             ${config.RECIPIENTEMAIL},
             cc:${env.developersEmail},
