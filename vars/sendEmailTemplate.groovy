@@ -41,7 +41,7 @@ ${env.commitMessage}
             break
 
         case 'APPROVAL_1':
-            emailSubject = "[APPROVAL] Production Deployment - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            emailSubject = "[APPROVAL] CI/CD Production Deployment - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             emailBody = """
 A deployment to the Production environment has been initiated and requires your approval.
 
@@ -51,7 +51,7 @@ The pipeline is waiting for your decision to proceed. Please access the Jenkins 
 
         case 'APPROVAL_2':
             def firstApproverName = config.EXTRA_DATA?.firstApprover ?: 'The first approver'
-            emailSubject = "[APPROVAL] Production Deployment - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            emailSubject = "[APPROVAL] CI/CD Production Deployment - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             emailBody = """
 The first approval for the production deployment was completed by ${firstApproverName}.
 
@@ -61,37 +61,37 @@ Your final approval is now required to proceed. Please access the Jenkins pipeli
 
         case 'UAT_UNHEALTHY':
             def healthStatus = config.EXTRA_DATA?.healthStatus ?: 'Unknown'
-            emailSubject = "[FAILURE] Pipeline Failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            emailSubject = "[FAILURE] CI/CD Pipeline Failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             emailBody = """
-The pipeline has FAILED because the ArgoCD application '${env.argoAppName}' in the UAT environment is not healthy.
+The pipeline has FAILED because the application '${env.argoAppName}' in the UAT environment is not healthy by ArgoCD health check.
 
 Current Status: ${healthStatus}
 
-Please check the ArgoCD dashboard and application logs for more details.
+Please check the deployment and application logs for more details.
 """
             break
             
         case 'PROD_UNHEALTHY':
             def unhealthyDepts = config.EXTRA_DATA?.unhealthyList ?: 'N/A'
             def healthyDepts = config.EXTRA_DATA?.healthyList ?: 'N/A'
-            emailSubject = "[FAILURE] Production Deployment Failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            emailSubject = "[FAILURE] CI/CD Production Deployment Failed for ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             emailBody = """
-The production deployment has FAILED because one or more ArgoCD applications did not become healthy after syncing.
+The production deployment has FAILED because one or more deployments of application did not become healthy after syncing by ArgoCD health check.
 
 Unhealthy Departments: ${unhealthyDepts}
 Healthy Departments: ${healthyDepts}
 
-Please check the ArgoCD dashboard for immediate investigation.
+Please check the deployment for immediate investigation.
 """
             break
 
         case 'POST_BUILD_REPORT':
             def buildResult = config.EXTRA_DATA?.buildResult ?: 'UNKNOWN'
-            emailSubject = "[REPORT] Pipeline ${buildResult} - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            emailSubject = "[REPORT] CI/CD Pipeline ${buildResult} - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             emailBody = """
 The CI/CD pipeline has completed with the result: ${buildResult}.
 
-Please review the attached build security report (if any) for further details.
+Please review the build, deployment, and logs for further details.
 """
             break
 
