@@ -20,10 +20,10 @@ def checkoutAndPreparation() {
         env.branch_name = params.BRANCHNAME_PARAM
         echo "Manual build detected. Using branch_name from parameter: ${env.branch_name}"
         echo "Manual build by: ${env.authorName} <${env.authorEmail}>"
-        MAILMODE="START-MANUAL"
+        def MAILMODE="START-MANUAL"
     } else {
         echo "Automated build from webhook detected. Using branch_name: ${env.branch_name}"
-        MAILMODE="START-AUTOMATED"
+        def MAILMODE="START-AUTOMATED"
     }
     cleanWs()
     env.encodedJob = env.JOB_NAME.replace('/', '%2F')
