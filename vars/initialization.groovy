@@ -22,7 +22,7 @@ def environmentVariablesSetup(Map config = [:]) {
 def hello(Map config = [:]) {
     echo "hello from ${config.who}"
     env.who = config.who
-    echo "${BUILD_USER_ID} - ${env.BUILD_USER} - ${env.BUILD_USER_EMAIL} - ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
+    echo "${env.BUILD_USER_ID} - ${env.BUILD_USER} - ${env.BUILD_USER_EMAIL} - ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
 }
 
 def checkoutAndPreparation(Map config = [:]) {
